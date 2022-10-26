@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name= "product")
 public class Product implements Serializable{
@@ -38,7 +40,9 @@ public class Product implements Serializable{
     @ManyToOne
     private Category category;
 
+
     @ManyToMany
+    // @JsonManagedReference
     @JoinTable(
         name = "product_supplier", 
         joinColumns = @JoinColumn(name="product_id"),

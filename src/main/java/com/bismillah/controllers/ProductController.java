@@ -1,5 +1,7 @@
 package com.bismillah.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bismillah.dto.ResponseData;
+import com.bismillah.dto.SearchData;
 import com.bismillah.models.entities.Product;
+import com.bismillah.models.entities.Supplier;
 import com.bismillah.services.ProductService;
 
 @RestController
@@ -75,5 +79,25 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void removeOn(@PathVariable("id") Long id){
         productService.removeOne(id);
+    }
+
+    @PostMapping("/{id}")
+    public void addSupplier(@RequestBody Supplier supplier, @PathVariable(name = "id") Long id){
+        productService.addSupplier(supplier, id);
+    }
+
+    @PostMapping("/search/name")
+    public List<Product> getProductByName(@RequestBody SearchData searchData){
+        return productService.findByName(searchData.getSearchKey());
+    }
+
+    @GetMapping("/search/category/{id}")
+    public List<Product> getProductByCategory(@PathVariable("id") long id){
+        return productService.findByCategory(id);
+    }
+
+    @GetMapping("/search/supplier/{id}")
+    public List<Product> getProductBySupplier(@PathVariable("id") long id){
+        return productService.findBySupplier(id);
     }
 }
